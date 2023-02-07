@@ -1,0 +1,14 @@
+﻿I'm sorry, but errors were detected in your script. Please correct the
+errors listed below, and try again.
+
+
+File "game/script.rpy", line 24: menu statement expects a non-empty block.
+    menu:
+        ^
+
+File "game/script.rpy", line 27: Line is indented, but the preceding say statement statement does not expect a block. Please check this line's indentation.
+    "Se coucher et faire le mort.":
+    ^
+
+Ren'Py Version: Ren'Py 8.0.3.22090809
+Mon Feb  6 13:53:23 2023
