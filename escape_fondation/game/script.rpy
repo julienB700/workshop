@@ -7,7 +7,7 @@
 define o  = Character('...', color="#dddddd")
 define d  = Character('D-123', color="#229933")
 define g1 = Character('Garde', color="#ff5555")
-define g2 = Character('Autre Garde', color="#cf5555")
+define g2 = Character('Autre Garde', color="#ff5555")
 
 transform alpha_dissolve:
     alpha 0.0
@@ -92,17 +92,39 @@ label suite1:
 
         "Prendre un autre couloir":
             $ autre_couloir = True
-            jump autre_couloir
-
-label suivre_gardes:
-    "Vous suivez les gardes."
-    jump dead_end
+            jump autre_couloir            
 
 label autre_couloir:
-    "Vosu prenez l'autre couloir sans les gardes."
+    "Vous prenez l'autre couloir sans les gardes."
     jump dead_end
 
+# branche rouge
+
+label suivre_gardes:
+    $ time = 5
+    $ timer_range = 5
+    $ timer_jump = 'attaquer_gardes'
+    "Vous suivez les gardes."
+    menu:
+        "Que fais-tu?"
+
+        "Attaquer discrètement":
+            "Vous attaquez les gardes par derrière et gagnez."
+            $ weapon = True 
+            $ acces_card = True
+            jump attaque_discret
+
+        "Attaquer frontalement":
+            "Les gardes vous explosent"
+            jump dead_end
+
+label attaque_discret:
+
+
+    
 label dead_end:
     "*dead*"
     "FIN"
     return
+
+
