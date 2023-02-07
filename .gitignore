@@ -1,6 +1,5 @@
 
 .vscode/settings.json
-escape_fondation
 escape_fondation/game/cache/bytecode.rpyb
 escape_fondation/game/cache/py3analysis.rpyb
 escape_fondation/game/cache/screens.rpyb
