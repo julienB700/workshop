@@ -6,3 +6,6 @@ escape_fondation/game/cache/screens.rpyb
 escape_fondation/game/saves/navigation.json
 escape_fondation/game/saves/persistent
 escape_fondation/log.txt
+escape_fondation/game/cache/shaders.txt
+escape_fondation/game/saves
+escape_fondation/errors.txt
