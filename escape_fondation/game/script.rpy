@@ -46,9 +46,9 @@ label tuer_discret:
     "Vous entendez des pas dans le couloir."
     menu:
         "Prendre les vêtements des gardes et se faufiler parmis les arrivants.":
-            jump
+            jump camouflage
         "Cacher les corps puis se cacher.":
-            jump
+            jump cache_cache
         "Fouiller les corps.":
             jump fouiller_corps
     
@@ -63,7 +63,46 @@ label fouiller_corps:
             jump stop_fouille
 
 label stop_fouille:
-    "Vous restez cacher, pendant ce temps d'autres gardes arrivent. Vous êtes maintenant en très mauvaise posture, si vous ne faites rien ils vous auront"
-#__________________________________________________________________________________________
+    $ time = 5
+    $ timer_range = 5
+    $ timer_jump = 'dead_end'
+    show screen countdown
+    "Vous restez caché, pendant ce temps d'autres gardes arrivent. Vous êtes maintenant en très mauvaise posture, si vous ne faites rien ils vous auront"
+    menu:
+        "Les prendre en joue":
+            jump braquer
+    
+label braquer:
+    $ time = 5
+    $ timer_range = 5
+    $ timer_jump = 'rien_dire'
+    show screen countdown
+
+    Vous prenez les gardes en joue, eux aussi vous menacent
+    menu:
+        "Abattre les deux gardes":
+            "Vous tirez, vous abattez le premier garde, le deuxième vous blesse légèrement à l'épaule."
+            "Il ne vous tue pas et vous regarde, il n'a pas l'air agressif."
+            jump abattre
+
+label cache_cache:
+    "Vous cachez les corps puis vous vous cachez"
+    jump stop_fouille
+
 label armes_cacher:
     $weapon=True
+    jump stop_fouille
+
+label abattre:
+    "Vous êtes blessé, vous devez vous reposer cependant vous n’êtes pas dans un lieu sûr. "
+    menu:
+        "Demander pitié au garde":
+            # LA IL MANQUE UN TRUC ATTENTION FUQHGIUFGYQSGYSGYYYYYYYYYYYFQS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        "Se reposer quand même":
+            jump reposer
+label reposer: 
+    
+
+
+
+    
