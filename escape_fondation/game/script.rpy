@@ -26,7 +26,17 @@ transform shaking:
     linear 0.1 xoffset 0 yoffset 0
     repeat
 
+transform cacahuette_pos1:
+    xzoom .2 yzoom .2
+    xpos .5 ypos .25
+
+transform cacahuette_pos2:
+    xzoom .4 yzoom .4
+    xpos .3 ypos .30
+
 init:
+
+    image cacahuette = "/images/monsters/cacahuette.png"
 
     $ timer_range = 0
     $ timer_jump = 0
@@ -49,7 +59,7 @@ label start:
 
     o "Tu te réveille dans un pièce fermée."
 
-    scene bg room
+    scene bg start
     with dissolve
 
     o "Dans la pièce il n'y a que des cadavres portant le même uniforme que toi."
@@ -163,6 +173,8 @@ label couloir_cri:
     o "Vous vous dirigez vers le couloir d'où venait le cri."
     o "Le cri était si inquiétant que vous vous précipitez pour de qui venait le cri."
     o "Vous arrivez à la source du bruit et constatez la scène : "
+
+    scene bg cellule
     o "Un garde envoie des prisonniers dans une cellule ou se trouve un sorte de d'entité en forme de statue."
     o "Sur le mur à votre gauche se trouve un levier."
 
@@ -180,12 +192,12 @@ label choice_cellule:
         o "Que faites-vous ?"
 
         "Appuyer sur le bouton":
-        hide screen countdown
-        jump appuie_bouton
+            hide screen countdown
+            jump appuie_bouton
 
         "Activer le levier":
-        hide screen countdown
-        jump activer_levier
+            hide screen countdown
+            jump activer_levier
 
 label rester_cache:
     o "Vous êtes désemparé par la situation en face de vous et préférez rester caché."
@@ -194,28 +206,33 @@ label appuie_bouton:
     o "Vous appuyez le bouton à votre gauche."
     o "Les lumières de la zone s'éteignent, au même moment, les portes donnant sur la cellule s'ouvrent."
 
-    scene bg intersection at shaking, truecenter with dissolve
+    scene bg cellule at shaking, truecenter with dissolve
     play sound "/audio/scream.mp3"
 
     o "Des cris retentissent dans tout le couloir."
-    scene bg intersection
+    scene bg cellule
 
     o "Vous rappuyez sur le bouton en esperant que la lumère se rallume."
     o "Une marre de sang coule de la porte de la cellule."
     o "Les gardes et les détenus se sont fait massacrer devant vous par l'entité que vous aviez entre-aperçu."
 
-    scene bg intersection with dissolve
-    scene bg intersection with dissolve
+    scene bg black
+    pause .5
+    scene bg cellule
+    show cacahuette at cacahuette_pos1
 
     o "La lumière ne semble pas correctement rétablie."
 
-    scene bg intersection with dissolve
-    scene bg intersection with dissolve
+    scene bg black
+    pause .5
+    scene bg cellule
+    show cacahuette at cacahuette_pos2
 
     o "Au milieu des corps apparait l'entité."
     o "La lumière clignote et vous entendez des grincement à chaque clignotements."
     o "L'entité se rapproche de vous."
 
+    jump dead_end
 
 label activer_levier:
     o "Vous activez le levier à votre gauche."
