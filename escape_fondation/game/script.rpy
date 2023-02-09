@@ -46,8 +46,12 @@ init:
 
     $ karma = 0
 
+    $ regarder_porte = False
     $ reste_cache = False
     $ porte_active = False
+    $ levier2 = False
+    $ ignore = False
+    $ weapon = False
 
 screen countdown:
     timer 1 repeat True action If(time > 0, true=SetVariable('time', time - 1), false=[Hide('countdown'), Jump(timer_jump)])
