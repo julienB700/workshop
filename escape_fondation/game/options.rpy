@@ -15,7 +15,18 @@
 ##
 ## La chaîne de caractère contenu dans _() est éligible à la traduction.
 
-define config.name = _("escape_fondation")
+define gui.name_xpos = 0.5
+define gui.name_xalign = 0.5
+
+define gui.dialogue_xpos = 0.5
+define gui.dialogue_text_xalign = 0.5
+
+define gui.namebox_width = 800
+define gui.name_ypos = -22
+define gui.namebox_borders = Borders(15, 7, 15, 7)
+define gui.namebox_tile = True
+
+define config.name = _("Escape the Foundation")
 
 
 ## Détermine si le titre renseigné plus haut est affiché sur l'écran du menu
@@ -33,6 +44,9 @@ define config.version = "1.0"
 ## guillemets, et laissez une ligne entre les paragraphes.
 
 define gui.about = _p("""
+Workshop2 ETPA
+
+Groupe de Victor, Théo, Bran, Louis, Julien et José-Daniel.
 """)
 
 
