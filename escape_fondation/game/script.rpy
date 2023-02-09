@@ -77,7 +77,6 @@ init:
 
     $ timer_range = 0
     $ timer_jump = 0
-    $ weapon = False
     $ karma = 0
 
     $ regarder_porte = False
@@ -191,10 +190,23 @@ label sortie_salle:
 
 label suivre_gardes:
     o "Vous suivez les gardes."
-    jump dead_end
+    $ time = 5
+    $ timer_range = 5
+    $ timer_jump = 'attaquer_gardes'
+    "Que fais-tu?"
+
+    menu:
+        "Attaquer discrètement":
+            "Vous attaquez les gardes par derrière et gagnez."
+            $ weapon = True 
+            $ acces_card = True
+            jump dead_end #TODO attaque_discret
+
+        "Attaquer frontalement":
+            "Les gardes vous explosent"
+            jump dead_end
 
 label autre_couloir:
-    $ weapon = True
     scene bg couloir
     with dissolve
 
@@ -643,7 +655,7 @@ label regarder_porte:
         "Attaquer les gardes avec votre arme ?" if weapon:
             jump attaquer_arme_porte
         "Attaquer les gardes ?":
-            jump attaquer_sans_arme
+            jump attaquer_sans_arme # TODO faire truc
         "Rebrousser chemin ?":
             jump choice_couloir
 
