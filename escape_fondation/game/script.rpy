@@ -361,9 +361,64 @@ label gourmand:
 
 label folie:
     o "Vous errez"
-    o "Vous devienne fou"
-    o "Vous arrivez devant deux portes, derrière l'une d'elles, vous entendez du bruit
-        "
+    o "Vous devienne fou, la scène a laquelle vous venez d'assiter était des plus atroces."
+    o "Vous entendez du bruit venir de derrière vous, le big toutou est de retour."
+    o "Il y a derrière vous un gros chien, et devant vous se trouve un cul de sac."
+    o "A votre gauche, il y a une porte derrière laquelle vous entendez du bruit, le
+        stress vous empêche de déterminer ce qu'il y a derrière la porte."
+    o "A votre droite, se trouve une porte, totalement silencieuse."
+
+    $ time = 10
+    $ timer_range = 10
+    $ timer_jump = 'get_bouffed'
+    show screen countdown
+    menu:
+        "Porte de gauche":
+            hide screen countdown
+            jump porte_gauche
+        "Porte de droite":
+            hide screen countdown
+            jump porte_droite
+
+label get_bouffed:
+    o "Vous aimez tant ce chien que vous finissez par lui faire un câlin d'amour."
+    o "Lui aussi exprime son amour envers vous, en vous déchiquetant le bras."
+    o "puis l'autre"
+    o "puis une jambe"
+    o "puis l'autre"
+
+    jump dead_end
+
+label porte_droite:
+    o "Vous entrez dans la pièce, et fermez rapidement derrière vous."
+    o "La salle est totalement sombre, on n'y voit strictement rien."
+    o "Un grognement se fait entendre en face de vous."
+    o "La salle silencieuse n'était clairement pas vide."
+
+    jump dead_end
+
+label porte_gauche:
+    o "Vous entrez dans la pièce, et fermez rapidement derrière vous."
+    o "La salle est quasiment vide, au milieu de la salle se trouve un écran cathodique
+        avec un ordinateur. A côté de celui-ci se trouve des dossiers, vous ne savez pas
+        ce qu'ils contiennent."
+    o "Un programme semble être lancé sur l'écran."
+
+    o "Que faire ?"
+    menu:
+        "Arrêter le programme de l'ordinateur":
+            jump stop_ordi
+        "Fouiller dossiers":
+            jump fouiller
+
+label fouiller:
+    o "Vous prenez un dossier et commencez a feuilleter."
+    o "Il s'avère que l'infrastructure dans laquelle vous vous trouvez est un centre SCP :
+        un endroit on l'on enferme des créatures pour experimenter dessus."
+    o "Les humains qui se trouvent dans ce bâtiment sont soit des gardes, soit des condamnés à
+        mort dont la vie n'a plus de 'valeur'. La fondation se sert de ces condamnés pour
+        experimenter sur les créatures."
+    o "En continuant de fouiller vous vous rendez compte que "
 
 label rester_cache:
     $ reste_cache = True
