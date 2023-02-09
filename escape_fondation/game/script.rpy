@@ -8,6 +8,7 @@ define o  = Character('...', color="#dddddd")
 define d  = Character('D-123', color="#229933")
 define g1 = Character('Garde', color="#ff5555")
 define g2 = Character('Autre Garde', color="#cf5555")
+define r  = Character('Robert', color="#229933")
 
 transform alpha_dissolve:
     alpha 0.0
@@ -23,7 +24,7 @@ screen countdown:
 init:
     $ timer_range = 0
     $ timer_jump = 0
-
+    $ weapon = False
     $ karma = 0
 
 # Le jeu commence ici
@@ -63,6 +64,7 @@ label fouiller_corps:
             jump stop_fouille
 
 label stop_fouille:
+    
     $ time = 5
     $ timer_range = 5
     $ timer_jump = 'dead_end'
@@ -70,6 +72,7 @@ label stop_fouille:
     "Vous restez caché, pendant ce temps d'autres gardes arrivent. Vous êtes maintenant en très mauvaise posture, si vous ne faites rien ils vous auront"
     menu:
         "Les prendre en joue":
+            hide screen countdown
             jump braquer
     
 label braquer:
@@ -78,11 +81,12 @@ label braquer:
     $ timer_jump = 'rien_dire'
     show screen countdown
 
-    Vous prenez les gardes en joue, eux aussi vous menacent
+    "Vous prenez les gardes en joue, eux aussi vous menacent"
     menu:
         "Abattre les deux gardes":
             "Vous tirez, vous abattez le premier garde, le deuxième vous blesse légèrement à l'épaule."
             "Il ne vous tue pas et vous regarde, il n'a pas l'air agressif."
+            hide screen countdown
             jump abattre
 
 label cache_cache:
@@ -97,12 +101,72 @@ label abattre:
     "Vous êtes blessé, vous devez vous reposer cependant vous n’êtes pas dans un lieu sûr. "
     menu:
         "Demander pitié au garde":
-            # LA IL MANQUE UN TRUC ATTENTION FUQHGIUFGYQSGYSGYYYYYYYYYYYFQS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            d "Pitié monsieur laissez moi tranquille"
+            jump pitie
         "Se reposer quand même":
             jump reposer
-label reposer: 
-    
+        "Fuire la salle de pause":
+            jump salle_vide
+label rien_dire:
+    $ time = 5
+    $ timer_range = 5
+    $ timer_jump = 'rien_faire'
+    show screen countdown
+    "Un des gardes prit en joue son collègue et l’abattit sèchement." 
+    "Que voulez-vous faire ?"
+    menu:
+        "Lui demander qui il est":
+            hide screen countdown
+            jump pres_robert
+        
+label pres_robert:
+    g2 "Je m'appelle Robert, je suis agent secret."
+    menu:
+        "Pourquoi ne pas m'avoir tué?":
+            jump team_robert
+        "Merci de m'avoir sauvé":
+            jump team_robert
 
+label team_robert:
+    r "J'aimerai faire équipe avec toi"# BIG CHANGEMENT ICI A FAIRE ATTENTION DIQUHUIQHUIQFHUIQFHYGH!!!!!!!!!!!!!
+    menu:
+        "Vous mentez":
+            jump mensonge
+        "Lui demander les bonnes raisons de le suivre":
+            jump pourquoi
+        "Accepter mais le mettre en garde":
+            jump acceptation
 
+label mensonge:
+    d "Vous mentez! Je ne crois pas un mot de ce que vous dîtes."
+    "Une bataille fait rage entre vous et l'agent du Chaos. Vous finissez par le mettre à terre et l'exécuter "
+    jump abattre
 
-    
+label pourquoi:
+    d "Pourquoi devrais-je vous suivre? "
+    r "Je suis le seul en qui vous pouvez avoir confiance pour vous sortir de cet enfer."
+    menu:
+        "Accepter":
+            jump double_accept
+        
+label reposer:
+    "Le temps que vous vous reposiez de nouveaux gardes sont arrivés et vous ont pourchassé, vous commencez à fuir cependant, ils continuent de vous suivre. Au bout de quelques minutes, ils commencent à vous rattraper, vous êtes fatigué. Vous tombez dans les pommes et à votre réveil vous êtes attaché sur une chaise dans une grande salle. Vous commencez à entendre des gros bruits et à apercevoir une ombre au loin. L'ombre se rapprochant de plus en plus laissant place à une silhouette abominable. Une sorte d'énorme ver commence à se rapprocher et soudain vous saute dessus. C'est la fin, vous finissez dans son estomac."
+    jump start
+
+label dead_end:
+    "GAME OVER "
+
+label rien_faire:
+    g2 "Bonjour, je m'appelle Robert, je suis agent secret."
+    jump team_robert
+
+label acceptation:
+    d "J'accepte de vous suivre, mais vous 'avez pas intérêt de me la faire à l'envers, ou vous le regretterez."
+    jump double_accept
+
+label double_accept:
+    "Il sort de sa poche une carte de l'endroit et vous montre la sortie dont-il parle."
+
+label pitie:
+    "Les gardes vous mettent une balle entre les deux yeux."
+    jump start
