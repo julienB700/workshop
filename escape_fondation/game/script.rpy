@@ -47,8 +47,6 @@ label tuer_discret:
     "Vous tuez les gardes."
     "Vous entendez des pas dans le couloir."
     menu:
-        "Prendre les vêtements des gardes et se faufiler parmis les arrivants.":
-            jump camouflage
         "Cacher les corps puis se cacher.":
             jump cache_cache
         "Fouiller les corps.":
