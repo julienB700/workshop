@@ -419,11 +419,9 @@ label deux_bonbons:
 label gourmand:
     o "Stop bouffer là gros porc"
     jump dead_end
-=======
-    jump suivre_gardes
 
 
-label suivre_gardes:
+label suivre_gardes2:
     scene bg_soldats
     "Vous continuez à suivre les gardes."
     "Après quelques minutes, ils arrivent dans une grande pièce.  Celle-ci semble être leur salle de pause."
