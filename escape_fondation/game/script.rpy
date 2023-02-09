@@ -9,10 +9,10 @@ define oo = Character('', color="#dddddd", what_font="/fonts/newspaper.ttf")
 define d  = Character('D-123', color="#229933", what_font="/fonts/newspaper.ttf")
 define g1 = Character('Garde', color="#ff5555", what_font="/fonts/typewriter_old.ttf" )
 define g2 = Character('Autre Garde', color="#cf5555", what_font="/fonts/typewriter_clean.ttf")
-define d1 = Character('Detenu D-182', color="#22cc33", what_font="/fonts/newspaper_clean.ttf")
+define d1 = Character('Detenu D-182', color="#22cc33", what_font="/fonts/newspaper_clean.otf")
 define d2 = Character('Detenu D-120', color="#11ff66", what_font="/fonts/newspaper.ttf")
-define caca = Character('???', color="#555555", what_font="alien2.ttf")
-define waf = Character('Agrou Agrou', color="#999999", what_font="alien2.ttf")
+define caca = Character('???', color="#555555", what_font="/fonts/alien2.ttf")
+define waf = Character('Chien', color="#999999", what_font="/fonts/newspaper.ttf")
 
 transform alpha_dissolve:
     alpha 0.0
@@ -38,8 +38,41 @@ transform cacahuette_pos2:
     xzoom .4 yzoom .4
     xpos .3 ypos .30
 
+transform perso:
+    xzoom 1 yzoom 1
+    xpos .1 ypos.3
+
+
+transform perso2:
+    xzoom 1 yzoom 1
+    xpos .3 ypos.3
+    
+transform perso3:
+    xzoom 1 yzoom 1
+    xpos .3 ypos.3
+
+transform Chien:
+    xzoom 1 yzoom 1
+    xpos .3 ypos.3 
+
+transform garde:
+    xzoom 1 yzoom 1
+    xpos .7 ypos.3
+
+transform garde2:
+    xzoom 1 yzoom 1
+    xpos .1 ypos.3              
+
+transform mort:
+    xzoom 2 yzoom 2
+    xpos.1 ypos.3
+
+
+
 init:
     image cacahuette = "/images/monsters/cacahuette.png"
+    image chien = "/images/monsters/chien.png"
+    image perso = "/images/monsters/perso.png"
 
     $ timer_range = 0
     $ timer_jump = 0
@@ -105,6 +138,11 @@ label faire_le_mort:
     
     o "Vous décidez de vous coucher par terre et de passer pour mort en esperant
         que les gardes vous ignorent."
+
+    show garde at garde with dissolve
+    
+    show garde2 at garde2 with dissolve
+
     g1 "Encore un qui n'a pas duré longtemps !"
     g2 "Je ne comprends pas le but de ces experiences..."
     g2 "Qu'espèrent-ils accomplir au juste?"
@@ -119,6 +157,8 @@ label faire_le_mort:
         exactement le même que ceux portés par les cadavres à côté de vous."
     o "Les gardes ne vous repèrent pas, après avoir jeté un cadavre dans votre salle,
         ils repartent."
+    hide garde
+    hide garde2
     o "Vous en profitez pour sortir de la salle avant que la porte ne se ferme, en
         faisant attention de ne pas vous faire repérer."
 
@@ -153,6 +193,7 @@ label suivre_gardes:
     jump dead_end
 
 label autre_couloir:
+    $ weapon = True
     scene bg couloir
     with dissolve
 
@@ -294,6 +335,12 @@ label vesqui_question:
 label bebette:
     waf "grrrr..."
     o "L'alarme SCP évadé retentit."
+    scene bg couloirchien
+    with dissolve
+    show chien at chien
+    show perso at perso
+    show perso2 at perso2
+    show perso3 at perso3
     d2 "Oh un gros chien !"
     d "COURREZZZ !"
     o "Les portes du couloirs se ferment, surement pour tenter de contenir la bestiole
@@ -306,6 +353,10 @@ label bebette:
     o "Le monstre ayant arrêté sa course, les portes se referment sur lui et le corps
         sans vie d'un des prisonniers que vous avez sauvé."
 
+    scene bg bonbon
+    with dissolve
+    show perso at perso1
+    show perso3 at perso2
     o "Vous prenez le temps de réaliser ce qu'il vient de vous arriver, mais ce temps est
         vite interrompu, vous vous rendez compte que vous êtes arrivé dans une salle lugubre:"
     o "La salle ressemble a une salle d'opération, quelques taches de sang anciennes sont
@@ -342,6 +393,11 @@ label allie_pas_patient:
     jump folie
 
 label deux_bonbons:
+    scene bg bonbon
+    with dissolve
+    show perso at perso
+    show perso3 at perso3
+
     o "Vous décidez de suivre l'indication et de ne vous servir que deux bonbons."
     o "Vous les mangez, c'est la première fois que vous mangez depuis votre réveil ici."
     o "Le goût sucré des bonbons vous apaise."
@@ -364,6 +420,9 @@ label gourmand:
     jump dead_end
 
 label folie:
+    scene couloir2
+    with dissolve
+
     o "Vous errez"
     o "Vous devienne fou, la scène a laquelle vous venez d'assiter était des plus atroces."
     o "Vous entendez du bruit venir de derrière vous, le big toutou est de retour."
@@ -451,7 +510,7 @@ label activer_levier1:
 
 label regarder_porte:
     $ regarder_porte = True
-    o "Vous la scène aperçevez à travers vitre de la porte :"
+    o "Vous aperçevez la scène à travers vitre de la porte :"
     o "Les gardes envoient des détenus dans une étrange cellule blindée, les portes se
         referement derrière les prisonniers."
     o "Des cris étouffés par le blindage de la cellule retentissent."
@@ -528,9 +587,11 @@ label choice_entite:
     o "Que faites-vous ?"
     menu:
         "Activer le levier":
+            hide screen countdown
             jump activer_levier2
 
         "Fuir":
+            hide screen countdown
             jump fuite_entite
 
 label fixer_entite:
@@ -556,7 +617,54 @@ label activer_levier2:
     o "Vous n'avez pas d'autre choix que de revenir sur vos pas."
     jump choice_couloir
 
+
+scene bg panneauelectrique
+with dissolve
+
+scene bg separerapreslevier
+with dissolve
+
+scene bg aurevoircacahuette
+with dissolve
+
+scene bg cacahuettetue
+with dissolve
+
+scene bg couloirchien
+with dissolve
+show chien at cacahuette_pos1
+show perso at cacahuette_pos1
+show perso2 at cacahuette_pos1
+show perso3 at cacahuette_pos1
+
+
+
+scene bg salleordi
+with dissolve
+show perso at cacahuette_pos2
+
+scene bg ordi1
+with dissolve
+
+scene bg ordi2
+with dissolve
+
+
+
+
+
+
+
 label dead_end:
+    scene bg black
+    show mort at mort
+    with dissolve
     oo "*dead*"
     oo "FIN"
     return
+
+label Win_end:
+    scene bg Win
+    with dissolve
+    oo "*Victoire*"  
+    return  
