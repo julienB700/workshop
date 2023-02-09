@@ -9,6 +9,10 @@ define oo = Character('', color="#dddddd", what_font="/fonts/newspaper.ttf")
 define d  = Character('D-123', color="#229933", what_font="/fonts/newspaper.ttf")
 define g1 = Character('Garde', color="#ff5555", what_font="/fonts/typewriter_old.ttf" )
 define g2 = Character('Autre Garde', color="#cf5555", what_font="/fonts/typewriter_clean.ttf")
+define d1 = Character('Detenu D-182', color="#22cc33", what_font="/fonts/newspaper_clean.ttf")
+define d2 = Character('Detenu D-120', color="#11ff66", what_font="/fonts/newspaper.ttf")
+define caca = Character('???', color="#555555", what_font="alien2.ttf")
+define waf = Character('Agrou Agrou', color="#999999", what_font="alien2.ttf")
 
 transform alpha_dissolve:
     alpha 0.0
@@ -56,16 +60,22 @@ screen countdown:
 
 # Le jeu commence ici
 label start:
-    o "Tu te réveille dans un pièce fermée."
+    o "Vous vous réveillez dans un pièce fermée."
 
     scene bg start
     with dissolve
 
-    o "Dans la pièce il n'y a que des cadavres portant le même uniforme que toi."
-    o "Mais le plus toublant se trouve juste en face de toi :"
-    o "Un cadavre te ressemblant en tout point tel un jumeau."
+    o "Qu'est ce que je fais ici ?"
+    o "Qu'est ce qu'il m'arrive ?"
+
+    d "D-123 ?"
+
+    o "L'identifiant D-123 est noté sur votre vêtement."
+    o "Dans la pièce il n'y a que des cadavres portant le même uniforme que vous."
+    o "Mais le plus toublant se trouve juste en face de vous :"
+    o "Un cadavre vous ressemblant en tout point tel un jumeau."
     o "Soudain, des gardes surgissent dans la salle, l'un d'eux a un cadavre dans
-    ses bras."
+        ses bras."
 
     jump choice1
 
@@ -76,7 +86,7 @@ label choice1:
 
     show screen countdown
     menu:
-        o "Que fais-tu ?"
+        o "Que faites-vous ?"
 
         "Se coucher et faire le mort.":
             hide screen countdown
@@ -88,22 +98,22 @@ label choice1:
 
 label faire_le_mort:
     o "Vous décidez de vous coucher par terre et de passer pour mort en esperant
-    que les gardes vous ignorent."
+        que les gardes vous ignorent."
     g1 "Encore un qui n'a pas duré longtemps !"
     g2 "Je ne comprends pas le but de ces experiences..."
     g2 "Qu'espèrent-ils accomplir au juste?"
     g1 "C'est pas notre boulot de poser de question, contente toi de faire ce qu'on
-    te demande !"
+        te demande !"
     g1 "Tiens, pose-le ici."
     o "Les deux gardes jettent le corps d'un autre homme dans la salle ou vous vous
-    trouvez et s'en vont."
+        trouvez et s'en vont."
 
-    o "Il semblerait que vous soyez un genre de prisonnier, votre uniforme blanc est
-    moche."
-    o "Ils ne vous repèrent pas, après avoir jeté un cadavre dans votre salle, ils
-    repartent."
+    o "Il semblerait que vous soyez un genre de prisonnier, votre uniforme orange est
+        exactement le même que ceux portés par les cadavres à côté de vous."
+    o "Les gardes ne vous repèrent pas, après avoir jeté un cadavre dans votre salle,
+        ils repartent."
     o "Vous en profitez pour sortir de la salle avant que la porte ne se ferme, en
-    faisant attention de ne pas vous faire repérer."
+        faisant attention de ne pas vous faire repérer."
 
     jump sortie_salle
 
@@ -144,7 +154,7 @@ label autre_couloir:
     with dissolve
 
     o "Après avoir marché une vingtaine de secondes, vous faites face a une
-    intersection."
+        intersection."
 
     scene bg intersection at shaking, truecenter
     with dissolve
@@ -155,19 +165,19 @@ label autre_couloir:
     scene bg intersection
 
     o "Vous entendez un cri de détresse inquiétant venant d'un d'un des couloirs en
-    face de vous."
+        face de vous."
 
     jump choice_couloir
 
 label choice_couloir:
     scene bg intersection
 
-    if reste_cache or porte_active:
+    if reste_cache or porte_active or regarder_porte or levier2 or ignore:
         o "Vous revenez sur vos pas et arrivez à l'intersection d'avant."
     o "Où irez-vous ?"
 
     menu:
-        "Couloir d'où vient le cri" if not (reste_cache or porte_active):
+        "Couloir d'où vient le cri" if not (reste_cache or porte_active or regarder_porte or levier2 or ignore):
             jump couloir_cri
 
         "Couloir à l'opposé d'où vient le cri":
@@ -179,9 +189,12 @@ label couloir_cri:
     o "Vous arrivez à la source du bruit et constatez la scène : "
     scene bg cellule
     o "Un garde envoie des prisonniers dans une cellule ou se trouve un sorte de
-    d'entité en forme de statue."
+        d'entité en forme de statue."
     o "Sur le mur à votre gauche se trouve un levier, ainsi qu'un gros bouton.
-    Il n'y a pas d'indication sur ce que font ni le lever, ni le bouton."
+        Il n'y a pas d'indication sur ce que font ni le lever, ni le bouton."
+    o "Vous trouvez une carte magnétique de niveau 1 posée à côté du bouton."
+
+    $ carte_magnetique = True
 
     jump choice_cellule
 
@@ -202,14 +215,160 @@ label choice_cellule:
             hide screen countdown
             jump activer_levier1
 
+        "Attaquer les gardes avec l'arme" if weapon:
+            hide screen countdown
+            jump attaquer_arme_cellule
+
+label attaquer_arme_cellule:
+    o "Vous attaquez les deux gardes qui se trouvent devant vous."
+    o "Par miracle, les gardes, tels des stormtroopers, ne parviennent pas vous mettre
+        en danger, et vous parvenez a leur tirer tout les deux dessus."
+    o "Les deux gardes tombent à terre, ggwp ez"
+    o "Vous aperçevez à côté des deux corps, deux personnes se tenant debout, vous vous demandez
+        un moment si vous voyez double et si vous n'êtes pas fou."
+    o "Ils s'avèrent après vérification occulaire qu'il ne s'agit pas de gardes mais de deux
+        prisonniers que vous avez sauvé."
+
+    o "Que faites-vous ?"
+    menu:
+        "Leur taper la discute":
+            jump prisonniers_discuter
+        "Saluer et continuer votre chemin":
+            jump prisonniers_ignorer
+
+label prisonniers_ignorer:
+    $ ignore = True
+    if aggro:
+        o "Vous décidez de ne pas être gentil et, de manière totalement irrespectueuse
+            ignorer l'approche du prisonnier en face de vous pour vous éloigner."
+    else:
+        o "Vous saluez de loin les prisonniers, ils vous font signe en retour."
+
+    o "Il n'y a pas d'autre chemin ou progresser, vous décidez donc de retourner sur vos pas."
+
+    jump choice_couloir
+
+label prisonniers_discuter:
+    o "Vous vous approchez des deux détenus."
+    o "L'un deux fait un pas en avant :"
+    g1 "Qui es-tu ?"
+
+    menu:
+        "\"Qu'est ce que ça peut te faire ?\"":
+            $ aggro = True
+            jump prisonniers_ignorer
+        "Expliquer la situation":
+            jump explications
+        "Esquiver la question et proposer de s'entraider":
+            jump vesqui_question
+
+label explications:
+    d "Je ne sais pas ce que je fais ici, je me suis réveillé ici mais je ne
+        me souviens de rien..."
+    d2 "Personne ne semble se souvenir, nous non plus ne savons pas comment nous sommes
+        arrivés ici, mais de ce qu'on a appris, nous sommes dans un centre de la fondation
+        SCP."
+    d2 "Ils font des expériences sur nous et sur des monstres bizarres. Nous on leur sert
+        simplement de cobayes."
+    d1 "Certains se font torturer juste sous prétexte de la scie..."
+
+    jump bebette
+
+label vesqui_question:
+    d "Eh vous !"
+    d "Joingez-vous à moi, on arrivera pas a survivre si on ne s'entraide pas !"
+    d1 "Euhh, d'accord, mais qu'est ce qu'on fait maintenant ?"
+    d "Essayons de trouver un moyen de sortir."
+    d2 "On devrait avancer, j'entends des pas au fond du cou..."
+
+    jump bebette
+
+label bebette:
+    waf "grrrr..."
+    o "L'alarme SCP évadé retentit."
+    d2 "Oh un gros chien !"
+    d "COURREZZZ !"
+    o "Les portes du couloirs se ferment, surement pour tenter de contenir la bestiole
+        devant vous."
+    o "Vous et vos nouveaux camarades courrez pour fuire la le monstre."
+    d1 "AAAAAAAARGRHGERGGHDLGFDBJBJETOPREGUERPOGIR"
+    o "L'un de vos collègues vient de se faire schlasser par le gros chien"
+    waf "WOOF WOOF GRGR GRRGGRR NOM NOM"
+    o "Le chien arrête sa course et se concentre sur son repas fraîchement acquis."
+    o "Le monstre ayant arrêté sa course, les portes se referment sur lui et le corps
+        sans vie d'un des prisonniers que vous avez sauvé."
+
+    o "Vous prenez le temps de réaliser ce qu'il vient de vous arriver, mais ce temps est
+        vite interrompu, vous vous rendez compte que vous êtes arrivé dans une salle lugubre:"
+    o "La salle ressemble a une salle d'opération, quelques taches de sang anciennes sont
+        encore visibles."
+    o "Sur ce qui semble être la salle d'opération se trouve un bol avec une inscription :"
+    o "\"Pas plus de deux.\""
+    o "Vous vous penchez et vous trouvez des sortes de bonbons dans le bol."
+
+    o "Que faites-vous ?"
+
+    $ time = 10
+    $ timer_range = 10
+    $ timer_jump = 'allie_pas_patient'
+    show screen countdown
+    menu:
+        "Prendre deux bonbons":
+            hide screen countdown
+            jump deux_bonbons
+        "Prendre plus de deux bonbons":
+            hide screen countdown
+            jump gourmand
+
+label allie_pas_patient:
+    o "Votre co-détenu perd patience, il a faim."
+    o "Après tout, il a raison, on ne vous nourrit pas bien, voire pas du tout ici."
+    o "Il se précipite vers le bol et sors une dizaine de bonbons d'une traite."
+    o "A peine sort-il sa main du bol que ses mains tombent de sont corps."
+    o "Votre co-détenu saigne, il se vide de son sang. Ses cris d'agonie font
+        résonner la pièce."
+    o "L'homme s'écroule net au sol, puni de sa gourmandise."
+    o "Vous avez bien fait de ne pas vous précipiter."
+
+    o "La scène vous choque."
+    jump folie
+
+label deux_bonbons:
+    o "Vous décidez de suivre l'indication et de ne vous servir que deux bonbons."
+    o "Vous les mangez, c'est la première fois que vous mangez depuis votre réveil ici."
+    o "Le goût sucré des bonbons vous apaise."
+
+    o "Après vous avoir vu manger ces bonbons, votre co-détenu à la preuve que ceux-cis ne
+        sont pas piégés, il décide donc de s'en servir a son tour."
+    d2 "De toutes façon, qu'est ce qui m'empêche de m'en servir plus ?"
+    d2 "miam"
+    o "Votre allié prendre une poignée de bonbons, et les ingurgite d'une traite."
+    o "Seulement, sa gourmandise eut raison de lui. L'indication sur le bol n'était
+        pas a ommetre."
+    o "Les mains votre collègue se détachent de son corps, il saigne, énromement."
+    o "Il n'y a rien que vous puissiez faire, il finit par se vider de son sang."
+
+    o "La scène vous choque."
+    jump folie
+
+label gourmand:
+    o "Stop bouffer là gros porc"
+    jump dead_end
+
+label folie:
+    o "Vous errez"
+    o "Vous devienne fou"
+    o "Vous arrivez devant deux portes, derrière l'une d'elles, vous entendez du bruit
+        "
+
 label rester_cache:
     $ reste_cache = True
 
     o "Vous êtes désemparé par la situation en face de vous et préférez rester caché."
     o "Vous entendez des cris de détenus, vous ne savez pas exactement ce qu'il
-    leur arrive mais vous n'imaginez rien de bon."
+        leur arrive mais vous n'imaginez rien de bon."
     o "Vous ne pouvez rien faire de la où vous êtes et, pour éviter de vous faire
-    repérer par les gardes, vous décidez de rebrousser chemin."
+        repérer par les gardes, vous décidez de rebrousser chemin."
     scene bg intersection
     jump choice_couloir
 
@@ -228,12 +387,31 @@ label activer_levier1:
             jump regarder_porte
 
 label regarder_porte:
-    o "Vous aperçevez à travers "
+    $ regarder_porte = True
+    o "Vous la scène aperçevez à travers vitre de la porte :"
+    o "Les gardes envoient des détenus dans une étrange cellule blindée, les portes se
+        referement derrière les prisonniers."
+    o "Des cris étouffés par le blindage de la cellule retentissent."
+    o "Quand les portes se rouvrent, vous aperçevez une marre de sang couler de la porte,
+        ainsi qu'une sorte d'entité postée devant l'entrée."
+
+    menu:
+        "Attaquer les gardes avec votre arme ?" if weapon:
+            jump attaquer_arme_porte
+        "Attaquer les gardes ?":
+            jump attaquer_sans_arme
+        "Rebrousser chemin ?":
+            jump choice_couloir
+
+label attaquer_arme_porte:
+    o "Vous rouvrez la porte et sortez votre arme."
+    o "Vous butez les gardes, bien ouèj"
+    jump dead_end # TODO lier avec theo
 
 label appuie_bouton:
     o "Vous appuyez le bouton à votre gauche."
     o "Les lumières de la zone s'éteignent, au même moment, les portes donnant sur
-    la cellule s'ouvrent."
+        la cellule s'ouvrent."
 
     scene bg black
     play sound "/audio/scream.mp3"
@@ -244,7 +422,7 @@ label appuie_bouton:
     o "Vous rappuyez sur le bouton en esperant que la lumère se rallume."
     o "Une marre de sang coule de la porte de la cellule."
     o "Les gardes et les détenus se sont fait massacrer devant vous par l'entité que
-    vous aviez entre-aperçu."
+        vous aviez entre-aperçu."
 
     scene bg black
     pause .5
@@ -269,8 +447,7 @@ label appuie_bouton:
 
     if porte_active:
         o "Mais la porte que vous avez activé semble vous protéger, l'entité ne s'approche
-        pas d'avantage,
-        malgré le fait que la lumière continue de clignoter."
+            pas d'avantage, malgré le fait que la lumière continue de clignoter."
         o "Vous ne pouvez pas progresser d'avantage ici."
 
         jump choice_couloir
@@ -302,7 +479,16 @@ label fuite_entite:
     jump dead_end
 
 label activer_levier2:
-    jump dead_end
+    $ levier2 = True
+    o "Tout en regardant le monstre dans les yeux, vous tirez le levier à côté de vous."
+    o "C'est un levier d'urgence qui referme une porte blindée entre vous et l'entité,
+        l'entité se retrouve confinée tandis que vous êtes sain et sauf."
+
+    o "L'alarme SCP évadé retentit, vous n'avez d'autre choix que de rebrousser chemin
+        et rester discret pour éviter de vous faire repérer."
+
+    o "Vous n'avez pas d'autre choix que de revenir sur vos pas."
+    jump choice_couloir
 
 label dead_end:
     oo "*dead*"
