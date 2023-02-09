@@ -33,6 +33,7 @@ label start:
 
 
 label suivre_gardes:
+    scene bg_soldats
     "Vous continuez à suivre les gardes."
     "Après quelques minutes, ils arrivent dans une grande pièce.  Celle-ci semble être leur salle de pause."
     "Après quelque minutes les gardes commencent a se désarmer laissant leur armes sans surveillance."
@@ -155,6 +156,7 @@ label reposer:
 
 label dead_end:
     "GAME OVER "
+    return
 
 label rien_faire:
     g2 "Bonjour, je m'appelle Robert, je suis agent secret."
@@ -166,7 +168,12 @@ label acceptation:
 
 label double_accept:
     "Il sort de sa poche une carte de l'endroit et vous montre la sortie dont-il parle."
+    "Vous continuez votre route avec Robert. Vous arrivez dans une salle. Avant d'y entrer, Robert vous prévient qu'un monstre devrait se trouver dans cette salle et qu'il faudra l'affronter pour arriver à la porte menant à la suite.Robert ouvre la porte et commence à avancer. 
+    Que voulez-vous faire ?"
+
+
 
 label pitie:
     "Les gardes vous mettent une balle entre les deux yeux."
     jump start
+
