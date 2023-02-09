@@ -190,9 +190,10 @@ label sortie_salle:
 
 label suivre_gardes:
     o "Vous suivez les gardes."
-    $ time = 5
-    $ timer_range = 5
+    $ time = 10
+    $ timer_range = 10
     $ timer_jump = 'attaquer_gardes'
+    show screen countdown
     o "Que fais-tu?"
 
     menu:
@@ -200,10 +201,12 @@ label suivre_gardes:
             "Vous attaquez les gardes par derrière et gagnez."
             $ weapon = True
             $ acces_card = True
+            hide screen countdown
             jump dead_end #TODO attaque_discret
 
         "Attaquer frontalement":
             "Les gardes vous explosent"
+            hide screen countdown
             jump dead_end
 
 label autre_couloir:
@@ -243,7 +246,49 @@ label choice_couloir:
             jump couloir_cri
 
         "Couloir à l'opposé d'où vient le cri":
-            jump dead_end # TODO changer ici
+            jump couloir_oppose
+
+label couloir_oppose:
+    o "Vous décidez de vous éloigner de la d'où venait le cri, ça fait peur."
+    o "Au bout de quelques temps vous tombez sur une porte, mais au même moment,
+        des gardes arrivent, en face de la porte se trouve un distributeur derrière
+        lequel vous pouvez vous cacher."
+
+    o "Que faites-vous ?"
+
+    $ time = 10
+    $ timer_range = 10
+    $ timer_jump = 'dead_end' #TODO quoi ici
+    show screen countdown
+    menu:
+        "Porte":
+            hide screen countdown
+            jump porte_droite
+        "Se cacher":
+            hide screen countdown
+            jump se_cacher
+
+label se_cacher:
+    o "Vous tentez de vous cacher derrière le distributeur."
+    o "En vous postant derrière celui-ci, vous vous cognez le coude ce qui provoque
+        un bruit assez conséquent."
+    d "Aïe."
+    g1 "Qui est là ?"
+
+    $ time = 10
+    $ timer_range = 10
+    $ timer_jump = 'rien_dire'
+    show screen countdown
+
+    o "Que faites-vous ?"
+    menu:
+        "Ne rien dire/faire":
+            hide screen countdown
+            jump rien_dire
+        "Les prendre en joue" if weapon:
+            hide screen countdown
+            jump braquer
+
 
 label couloir_cri:
     o "Vous vous dirigez vers le couloir d'où venait le cri."
