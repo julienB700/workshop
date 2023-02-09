@@ -47,14 +47,14 @@ transform perso:
 transform perso2:
     xzoom 1 yzoom 1
     xpos .3 ypos.3
-    
+
 transform perso3:
     xzoom 1 yzoom 1
     xpos .3 ypos.3
 
 transform Chien:
     xzoom 1 yzoom 1
-    xpos .3 ypos.3 
+    xpos .3 ypos.3
 
 transform garde:
     xzoom 1 yzoom 1
@@ -62,7 +62,7 @@ transform garde:
 
 transform garde2:
     xzoom 1 yzoom 1
-    xpos .1 ypos.3              
+    xpos .1 ypos.3
 
 transform mort:
     xzoom 2 yzoom 2
@@ -135,12 +135,12 @@ label choice1:
             jump attaquer_gardes
 
 label faire_le_mort:
-    
+
     o "Vous décidez de vous coucher par terre et de passer pour mort en esperant
         que les gardes vous ignorent."
 
     show garde at garde with dissolve
-    
+
     show garde2 at garde2 with dissolve
 
     g1 "Encore un qui n'a pas duré longtemps !"
@@ -193,12 +193,12 @@ label suivre_gardes:
     $ time = 5
     $ timer_range = 5
     $ timer_jump = 'attaquer_gardes'
-    "Que fais-tu?"
+    o "Que fais-tu?"
 
     menu:
         "Attaquer discrètement":
             "Vous attaquez les gardes par derrière et gagnez."
-            $ weapon = True 
+            $ weapon = True
             $ acces_card = True
             jump dead_end #TODO attaque_discret
 
@@ -435,9 +435,9 @@ label gourmand:
 
 label suivre_gardes2:
     scene bg_soldats
-    "Vous continuez à suivre les gardes."
-    "Après quelques minutes, ils arrivent dans une grande pièce.  Celle-ci semble être leur salle de pause."
-    "Après quelque minutes les gardes commencent a se désarmer laissant leur armes sans surveillance."
+    o "Vous continuez à suivre les gardes."
+    o "Après quelques minutes, ils arrivent dans une grande pièce.  Celle-ci semble être leur salle de pause."
+    o "Après quelque minutes les gardes commencent a se désarmer laissant leur armes sans surveillance."
     menu:
         "Tuer les gardes discrètement":
             jump tuer_discret
@@ -445,18 +445,18 @@ label suivre_gardes2:
             jump armes_cacher
 
 label tuer_discret:
-    "Vous tuez les gardes."
-    "Vous entendez des pas dans le couloir."
+    o "Vous tuez les gardes."
+    o "Vous entendez des pas dans le couloir."
     menu:
         "Cacher les corps puis se cacher.":
             jump cache_cache
         "Fouiller les corps.":
             jump fouiller_corps
-    
+
 label fouiller_corps:
     $weapon=True
-    "Vous fouillez les corps et trouvez une arme à feu ainsi qu'une carte magnétique de niveau 1."
-    "Le temps que vous fouilliez les corps, deux autres gardes sont arrivés. Que voulez-vous faire?"
+    o "Vous fouillez les corps et trouvez une arme à feu ainsi qu'une carte magnétique de niveau 1."
+    o "Le temps que vous fouilliez les corps, deux autres gardes sont arrivés. Que voulez-vous faire?"
     menu:
         "Les prendre en joue.":
             jump braquer
@@ -464,24 +464,25 @@ label fouiller_corps:
             jump stop_fouille
 
 label stop_fouille:
-    
+
     $ time = 5
     $ timer_range = 5
     $ timer_jump = 'dead_end'
     show screen countdown
-    "Vous restez caché, pendant ce temps d'autres gardes arrivent. Vous êtes maintenant en très mauvaise posture, si vous ne faites rien ils vous auront"
+
+    o "Vous restez caché, pendant ce temps d'autres gardes arrivent. Vous êtes maintenant en très mauvaise posture, si vous ne faites rien ils vous auront"
     menu:
         "Les prendre en joue":
             hide screen countdown
             jump braquer
-    
+
 label braquer:
     $ time = 5
     $ timer_range = 5
     $ timer_jump = 'rien_dire'
     show screen countdown
 
-    "Vous prenez les gardes en joue, eux aussi vous menacent"
+    o "Vous prenez les gardes en joue, eux aussi vous menacent"
     menu:
         "Abattre les deux gardes":
             "Vous tirez, vous abattez le premier garde, le deuxième vous blesse légèrement à l'épaule."
@@ -490,7 +491,7 @@ label braquer:
             jump abattre
 
 label cache_cache:
-    "Vous cachez les corps puis vous vous cachez"
+    o "Vous cachez les corps puis vous vous cachez"
     jump stop_fouille
 
 label armes_cacher:
@@ -498,7 +499,7 @@ label armes_cacher:
     jump stop_fouille
 
 label abattre:
-    "Vous êtes blessé, vous devez vous reposer cependant vous n’êtes pas dans un lieu sûr. "
+    o "Vous êtes blessé, vous devez vous reposer cependant vous n’êtes pas dans un lieu sûr. "
     menu:
         "Demander pitié au garde":
             d "Pitié monsieur laissez moi tranquille"
@@ -512,13 +513,13 @@ label rien_dire:
     $ timer_range = 5
     $ timer_jump = 'rien_faire'
     show screen countdown
-    "Un des gardes prit en joue son collègue et l’abattit sèchement." 
-    "Que voulez-vous faire ?"
+    o "Un des gardes prit en joue son collègue et l’abattit sèchement."
+    o "Que voulez-vous faire ?"
     menu:
         "Lui demander qui il est":
             hide screen countdown
             jump pres_robert
-        
+
 label pres_robert:
     g2 "Je m'appelle Robert, je suis agent secret."
     menu:
@@ -539,7 +540,7 @@ label team_robert:
 
 label mensonge:
     d "Vous mentez! Je ne crois pas un mot de ce que vous dîtes."
-    "Une bataille fait rage entre vous et l'agent du Chaos. Vous finissez par le mettre à terre et l'exécuter "
+    o "Une bataille fait rage entre vous et l'agent du Chaos. Vous finissez par le mettre à terre et l'exécuter "
     jump abattre
 
 label pourquoi:
@@ -548,9 +549,9 @@ label pourquoi:
     menu:
         "Accepter":
             jump double_accept
-        
+
 label reposer:
-    "Le temps que vous vous reposiez de nouveaux gardes sont arrivés et vous ont pourchassé, vous commencez à fuir cependant, ils continuent de vous suivre. Au bout de quelques minutes, ils commencent à vous rattraper, vous êtes fatigué. Vous tombez dans les pommes et à votre réveil vous êtes attaché sur une chaise dans une grande salle. Vous commencez à entendre des gros bruits et à apercevoir une ombre au loin. L'ombre se rapprochant de plus en plus laissant place à une silhouette abominable. Une sorte d'énorme ver commence à se rapprocher et soudain vous saute dessus. C'est la fin, vous finissez dans son estomac."
+    o "Le temps que vous vous reposiez de nouveaux gardes sont arrivés et vous ont pourchassé, vous commencez à fuir cependant, ils continuent de vous suivre. Au bout de quelques minutes, ils commencent à vous rattraper, vous êtes fatigué. Vous tombez dans les pommes et à votre réveil vous êtes attaché sur une chaise dans une grande salle. Vous commencez à entendre des gros bruits et à apercevoir une ombre au loin. L'ombre se rapprochant de plus en plus laissant place à une silhouette abominable. Une sorte d'énorme ver commence à se rapprocher et soudain vous saute dessus. C'est la fin, vous finissez dans son estomac."
     jump start
 
 label folie:
@@ -655,9 +656,13 @@ label regarder_porte:
         "Attaquer les gardes avec votre arme ?" if weapon:
             jump attaquer_arme_porte
         "Attaquer les gardes ?":
-            jump attaquer_sans_arme # TODO faire truc
+            jump attaquer_sans_arme
         "Rebrousser chemin ?":
             jump choice_couloir
+
+label attaquer_sans_arme:
+    o "Vous vous faites tirer dessus par les gardes."
+    jump dead_end
 
 label attaquer_arme_porte:
     o "Vous rouvrez la porte et sortez votre arme."
@@ -784,11 +789,6 @@ scene bg ordi2
 with dissolve
 
 
-
-
-
-
-
 label dead_end:
     scene bg black
     show mort at mort
@@ -800,8 +800,8 @@ label dead_end:
 label Win_end:
     scene bg Win
     with dissolve
-    oo "*Victoire*"  
-    return  
+    oo "*Victoire*"
+    return
 
 label rien_faire:
     g2 "Bonjour, je m'appelle Robert, je suis agent secret."
@@ -812,11 +812,13 @@ label acceptation:
     jump double_accept
 
 label double_accept:
-    "Il sort de sa poche une carte de l'endroit et vous montre la sortie dont-il parle."
-    "Vous continuez votre route avec Robert. Vous arrivez dans une salle. Avant d'y entrer, Robert vous prévient qu'un monstre devrait se trouver dans cette salle et qu'il faudra l'affronter pour arriver à la porte menant à la suite.Robert ouvre la porte et commence à avancer. 
-    Que voulez-vous faire ?"
+    o "Il sort de sa poche une carte de l'endroit et vous montre la sortie dont-il parle."
+    o "Vous continuez votre route avec Robert. Vous arrivez dans une salle. Avant d'y entrer, Robert vous prévient
+        qu'un monstre devrait se trouver dans cette salle et qu'il faudra l'affronter pour arriver à la porte menant
+        à la suite.Robert ouvre la porte et commence à avancer."
+    o "Que voulez-vous faire ?"
+    jump #TODO faire ca
 
 label pitie:
-    "Les gardes vous mettent une balle entre les deux yeux."
+    o "Les gardes vous mettent une balle entre les deux yeux."
     jump start
-
