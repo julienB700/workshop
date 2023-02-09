@@ -78,6 +78,7 @@ label start:
     o "Dans la pièce il n'y a que des cadavres portant le même uniforme que vous."
     o "Mais le plus toublant se trouve juste en face de vous :"
     o "Un cadavre vous ressemblant en tout point tel un jumeau."
+    play sound "/audio/bruit_pas.mp3"
     o "Soudain, des gardes surgissent dans la salle, l'un d'eux a un cadavre dans
         ses bras."
 
@@ -101,6 +102,7 @@ label choice1:
             jump attaquer_gardes
 
 label faire_le_mort:
+    
     o "Vous décidez de vous coucher par terre et de passer pour mort en esperant
         que les gardes vous ignorent."
     g1 "Encore un qui n'a pas duré longtemps !"
@@ -109,6 +111,7 @@ label faire_le_mort:
     g1 "C'est pas notre boulot de poser de question, contente toi de faire ce qu'on
         te demande !"
     g1 "Tiens, pose-le ici."
+    play sound "/audio/bruit_corp.mp3"
     o "Les deux gardes jettent le corps d'un autre homme dans la salle ou vous vous
         trouvez et s'en vont."
 
@@ -123,6 +126,7 @@ label faire_le_mort:
 
 label attaquer_gardes:
     d "BASTONNNNNNN!!"
+    play sound "/audio/bruit_fusillade.mp3"
     o "Les gardes vous fument de manière unilatérale."
 
     jump dead_end
@@ -464,6 +468,7 @@ label regarder_porte:
 
 label attaquer_arme_porte:
     o "Vous rouvrez la porte et sortez votre arme."
+    play sound "audio/bruit_sort_et_tire_arme.mp3"
     o "Vous butez les gardes, bien ouèj"
     jump dead_end # TODO lier avec theo
 
@@ -474,6 +479,7 @@ label appuie_bouton:
 
     scene bg black
     play sound "/audio/scream.mp3"
+    play sound "/audio/bruit_craquote.mp3"
 
     o "Des cris retentissent dans toute la zone."
     scene bg cellule
@@ -543,6 +549,7 @@ label activer_levier2:
     o "C'est un levier d'urgence qui referme une porte blindée entre vous et l'entité,
         l'entité se retrouve confinée tandis que vous êtes sain et sauf."
 
+    play sound "/audio/alert_scp_173_breach_out.mp3"
     o "L'alarme SCP évadé retentit, vous n'avez d'autre choix que de rebrousser chemin
         et rester discret pour éviter de vous faire repérer."
 
