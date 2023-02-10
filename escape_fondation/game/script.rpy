@@ -227,8 +227,8 @@ label attaque_discret:
     jump choice_couloir
 
 label attaque_frontale:
-     o "Les gardes vous explosent assez facilement."
-     jump dead_reset
+    o "Les gardes vous explosent assez facilement."
+    jump dead_reset
 
 label autre_couloir:
     scene bg couloir
