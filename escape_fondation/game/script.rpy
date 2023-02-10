@@ -13,7 +13,7 @@ define d1 = Character('Detenu D-182', color="#22cc33", what_font="/fonts/newspap
 define d2 = Character('Detenu D-120', color="#11ff66", what_font="/fonts/newspaper.ttf")
 define caca = Character('???', color="#555555", what_font="/fonts/alien2.ttf")
 define waf = Character('Chien', color="#999999", what_font="/fonts/newspaper.ttf")
-define r  = Character('Robert', color="#229933")
+define r  = Character('Robert', color="#229933", what_font="/fonts/typewriter_clean.ttf")
 
 transform alpha_dissolve:
     alpha 0.0
@@ -85,6 +85,7 @@ init:
     $ levier2 = False
     $ ignore = False
     $ weapon = False
+    $ dead_once = False
 
 screen countdown:
     timer 1 repeat True action If(time > 0, true=SetVariable('time', time - 1), false=[Hide('countdown'), Jump(timer_jump)])
@@ -97,20 +98,28 @@ screen countdown:
 
 # Le jeu commence ici
 label start:
+    scene bg black
     o "Vous vous réveillez dans un pièce fermée."
 
     scene bg start
     with dissolve
 
-    o "Qu'est ce que je fais ici ?"
-    o "Qu'est ce qu'il m'arrive ?"
+    if not dead_once:
+        o "Qu'est ce que je fais ici ?"
+        o "Qu'est ce qu'il m'arrive ?"
+        d "D-123 ?"
 
-    d "D-123 ?"
+        o "L'identifiant D-123 est noté sur votre vêtement."
+        o "Dans la pièce il n'y a que des cadavres portant le même uniforme que vous."
+        o "Mais le plus toublant se trouve juste en face de vous :"
+        o "Un cadavre vous ressemblant en tout point tel un jumeau."
+    else:
+        o "..."
+        d "Qu'est ce que je fais ici ?"
+        o "Vous vous réveillez dans la même salle que la d'où vous venez."
+        o "Vous observez autour de vous, toujours la même chose :"
+        o "Une pile de cadavres avec un uniforme orange."
 
-    o "L'identifiant D-123 est noté sur votre vêtement."
-    o "Dans la pièce il n'y a que des cadavres portant le même uniforme que vous."
-    o "Mais le plus toublant se trouve juste en face de vous :"
-    o "Un cadavre vous ressemblant en tout point tel un jumeau."
     play sound "/audio/bruit_pas.mp3"
     o "Soudain, des gardes surgissent dans la salle, l'un d'eux a un cadavre dans
         ses bras."
@@ -190,24 +199,36 @@ label sortie_salle:
 
 label suivre_gardes:
     o "Vous suivez les gardes."
-    $ time = 10
-    $ timer_range = 10
-    $ timer_jump = 'attaquer_gardes'
-    show screen countdown
     o "Que fais-tu?"
 
+    $ time = 10
+    $ timer_range = 10
+    $ timer_jump = 'suivre_gardes2'
+    show screen countdown
     menu:
         "Attaquer discrètement":
-            "Vous attaquez les gardes par derrière et gagnez."
-            $ weapon = True
-            $ acces_card = True
             hide screen countdown
-            jump dead_end #TODO attaque_discret
+            jump attaque_discret
 
         "Attaquer frontalement":
-            "Les gardes vous explosent"
             hide screen countdown
-            jump dead_end
+            jump attaque_frontale
+
+label attaque_discret:
+    $ weapon = True
+    $ carte_magnetique = True
+    o "Vous attaquez les gardes par derrière : l'effet de surprise
+        les rends confus et vous arrivez a les immobiliser et les
+        rendre hors d'état de nuire."
+    o "En les fouillant vous trouvez une arme et une carte d'accès."
+
+    o "Vous continuez de marcher et arrivez a une intersection."
+
+    jump choice_couloir
+
+label attaque_frontale:
+     o "Les gardes vous explosent assez facilement."
+     jump dead_end
 
 label autre_couloir:
     scene bg couloir
@@ -464,7 +485,7 @@ label deux_bonbons:
         sont pas piégés, il décide donc de s'en servir a son tour."
     d2 "De toutes façon, qu'est ce qui m'empêche de m'en servir plus ?"
     d2 "miam"
-    o "Votre allié prendre une poignée de bonbons, et les ingurgite d'une traite."
+    o "Votre allié prends une poignée de bonbons, et les ingurgite d'une traite."
     o "Seulement, sa gourmandise eut raison de lui. L'indication sur le bol n'était
         pas a ommetre."
     o "Les mains votre collègue se détachent de son corps, il saigne, énromement."
@@ -596,8 +617,15 @@ label pourquoi:
             jump double_accept
 
 label reposer:
-    o "Le temps que vous vous reposiez de nouveaux gardes sont arrivés et vous ont pourchassé, vous commencez à fuir cependant, ils continuent de vous suivre. Au bout de quelques minutes, ils commencent à vous rattraper, vous êtes fatigué. Vous tombez dans les pommes et à votre réveil vous êtes attaché sur une chaise dans une grande salle. Vous commencez à entendre des gros bruits et à apercevoir une ombre au loin. L'ombre se rapprochant de plus en plus laissant place à une silhouette abominable. Une sorte d'énorme ver commence à se rapprocher et soudain vous saute dessus. C'est la fin, vous finissez dans son estomac."
-    jump start
+    o "Le temps que vous vous reposiez de nouveaux gardes sont arrivés et vous ont pourchassé,
+        vous commencez à fuir cependant, ils continuent de vous suivre."
+    o "Au bout de quelques minutes, ils commencent à vous rattraper, vous êtes fatigué."
+    o "Vous tombez dans les pommes et à votre réveil vous êtes attaché sur une chaise dans une grande salle.
+        Vous commencez à entendre des gros bruits et à apercevoir une ombre au loin. "
+    o "L'ombre se rapprochant de plus en plus laissant place à une silhouette abominable. Une sorte d'énorme
+        ver commence à se rapprocher et soudain vous saute dessus."
+    o " C'est la fin, vous finissez dans son estomac."
+    jump dead_end
 
 label folie:
     scene couloir2
@@ -862,7 +890,7 @@ label double_accept:
         qu'un monstre devrait se trouver dans cette salle et qu'il faudra l'affronter pour arriver à la porte menant
         à la suite.Robert ouvre la porte et commence à avancer."
     o "Que voulez-vous faire ?"
-    jump #TODO faire ca
+    jump start #TODO faire ca
 
 label pitie:
     o "Les gardes vous mettent une balle entre les deux yeux."
