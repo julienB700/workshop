@@ -587,7 +587,8 @@ label rien_dire:
             jump pres_robert
 
 label pres_robert:
-    g2 "Je m'appelle Robert, je suis agent secret."
+    d "Qui êtes-vous?"
+    g2 "Je m'appelle Robert, c'est un nom de code évidemment. Je suis ici pour vous sauver, j'ai été envoyé par l'agence du Chaos. Nous nous battons contre les méfaits de la fondation SCP."
     menu:
         "Pourquoi ne pas m'avoir tué?":
             jump team_robert
@@ -595,7 +596,8 @@ label pres_robert:
             jump team_robert
 
 label team_robert:
-    r "J'aimerai faire équipe avec toi"# BIG CHANGEMENT ICI A FAIRE ATTENTION DIQUHUIQHUIQFHUIQFHYGH!!!!!!!!!!!!!
+    b "Je vous remercie mais pourquoi m'avez vous laissé vivre 'Robert' ?"
+    r "Tout simplement parce que vous étiez en danger il me semble et mon devoir est de vous protéger et de vous faire sortir d'ici!"
     menu:
         "Vous mentez":
             jump mensonge
@@ -877,11 +879,11 @@ label Win_end:
     return
 
 label rien_faire:
-    g2 "Bonjour, je m'appelle Robert, je suis agent secret."
+    g2 "Et bien si vous ne souhaitez pas parler, j'imagine que je vais devoir me présenter. Je me nomme Robert, c'est un nom de code évidement"
     jump team_robert
 
 label acceptation:
-    d "J'accepte de vous suivre, mais vous 'avez pas intérêt de me la faire à l'envers, ou vous le regretterez."
+    d "J'accepte de vous suivre, mais vous n'avez pas intérêt à me la faire à l'envers, ou vous le regretterez."
     jump double_accept
 
 label double_accept:
@@ -890,7 +892,11 @@ label double_accept:
         qu'un monstre devrait se trouver dans cette salle et qu'il faudra l'affronter pour arriver à la porte menant
         à la suite.Robert ouvre la porte et commence à avancer."
     o "Que voulez-vous faire ?"
-    jump start #TODO faire ca
+    menu:
+        "Exprimer son mécontentement":
+
+        "Le suivre":
+            jump suivre_robert
 
 label pitie:
     o "Les gardes vous mettent une balle entre les deux yeux."
