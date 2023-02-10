@@ -178,7 +178,7 @@ label attaquer_gardes:
     play sound "/audio/bruit_fusillade.mp3"
     o "Les gardes vous fument de manière unilatérale."
 
-    jump dead_end
+    jump dead_reset
 
 label sortie_salle:
     scene bg couloir
@@ -228,7 +228,7 @@ label attaque_discret:
 
 label attaque_frontale:
      o "Les gardes vous explosent assez facilement."
-     jump dead_end
+     jump dead_reset
 
 label autre_couloir:
     scene bg couloir
@@ -279,7 +279,7 @@ label couloir_oppose:
 
     $ time = 10
     $ timer_range = 10
-    $ timer_jump = 'dead_end' #TODO quoi ici
+    $ timer_jump = 'dead_reset' #TODO quoi ici
     show screen countdown
     menu:
         "Porte":
@@ -496,7 +496,7 @@ label deux_bonbons:
 
 label gourmand:
     o "Stop bouffer là gros porc"
-    jump dead_end
+    jump dead_reset
 
 
 label suivre_gardes2:
@@ -533,7 +533,7 @@ label stop_fouille:
 
     $ time = 5
     $ timer_range = 5
-    $ timer_jump = 'dead_end'
+    $ timer_jump = 'dead_reset'
     show screen countdown
 
     o "Vous restez caché, pendant ce temps d'autres gardes arrivent. Vous êtes maintenant en très mauvaise posture, si vous ne faites rien ils vous auront"
@@ -625,7 +625,7 @@ label reposer:
     o "L'ombre se rapprochant de plus en plus laissant place à une silhouette abominable. Une sorte d'énorme
         ver commence à se rapprocher et soudain vous saute dessus."
     o " C'est la fin, vous finissez dans son estomac."
-    jump dead_end
+    jump dead_reset
 
 label folie:
     scene couloir2
@@ -658,7 +658,7 @@ label get_bouffed:
     o "puis une jambe"
     o "puis l'autre"
 
-    jump dead_end
+    jump dead_reset
 
 label porte_droite:
     o "Vous entrez dans la pièce, et fermez rapidement derrière vous."
@@ -666,7 +666,7 @@ label porte_droite:
     o "Un grognement se fait entendre en face de vous."
     o "La salle silencieuse n'était clairement pas vide."
 
-    jump dead_end
+    jump dead_reset
 
 label porte_gauche:
     o "Vous entrez dans la pièce, et fermez rapidement derrière vous."
@@ -735,13 +735,13 @@ label regarder_porte:
 
 label attaquer_sans_arme:
     o "Vous vous faites tirer dessus par les gardes."
-    jump dead_end
+    jump dead_reset
 
 label attaquer_arme_porte:
     o "Vous rouvrez la porte et sortez votre arme."
     play sound "audio/bruit_sort_et_tire_arme.mp3"
     o "Vous butez les gardes, bien ouèj"
-    jump dead_end # TODO lier avec theo
+    jump dead_reset # TODO lier avec theo
 
 label appuie_bouton:
     o "Vous appuyez le bouton à votre gauche."
@@ -809,12 +809,12 @@ label choice_entite:
 label fixer_entite:
     o "Vous fixez le monstre dans les yeux."
     o "Vous perdez la battle de regard."
-    jump dead_end
+    jump dead_reset
 
 label fuite_entite:
     o "Vous tentez de prendre la fuite."
     o "A peine vous tournez le regard que votre se fait briser, le monstre vous a eu."
-    jump dead_end
+    jump dead_reset
 
 label activer_levier2:
     $ levier2 = True
@@ -862,13 +862,14 @@ scene bg ordi2
 with dissolve
 
 
-label dead_end:
+label dead_reset:
     scene bg black
     show mort at mort
     with dissolve
-    oo "*dead*"
-    oo "FIN"
-    return
+    ** "Vous êtes mort..."
+
+    $ dead_once = True
+    jump start
 
 label Win_end:
     scene bg Win
@@ -894,4 +895,4 @@ label double_accept:
 
 label pitie:
     o "Les gardes vous mettent une balle entre les deux yeux."
-    jump start
+    jump dead_reset
