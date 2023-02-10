@@ -894,7 +894,7 @@ label double_accept:
     o "Que voulez-vous faire ?"
     menu:
         "Exprimer son mécontentement":
-
+            jump start #TODO
         "Le suivre":
             jump suivre_robert
 
